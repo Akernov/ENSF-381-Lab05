@@ -44,13 +44,19 @@
             try {
                 const response = await fetch('https://67c275541851890165ac637c.mockapi.io/users_api');
                 const data = await response.json();
+                let found = false;
                 data.forEach(user => {
                     if (user.id == number) {
                         let {id, first_name, user_group} = user;
                         document.getElementById('textLabel').innerText = 
                         `ID: ${id}, Name: ${first_name}, Group: ${user_group}`;
+                        found = true;
                     }
                 });
+                if (!found) {
+                    document.getElementById('textLabel').innerText = 
+                    'No users were found with the provided User_ID.';
+                }
             } catch (error) {
                 console.error('Error fetching data: ', error);
             }
