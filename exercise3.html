@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lab5 - Exercise 1</title>
+    </head>
+    <body>
+        <input type="text" id="textInput" placeholder="Enter a user number(1-30)"/>
+        <label id="textLabel"></label>
+        <button id="redButton">Red</button>
+        <button id="blueButton">Blue</button>
+        <button id="greenButton">Green</button>
+        <button id="orangeButton">Orange</button>
+        <button id="purpleButton">Purple</button>
+    </body>
+    <script type="text/javascript">
+        document.getElementById('textInput').addEventListener('keypress', () => {
+            if (event.key === 'Enter') {
+                retrieveData(document.getElementById('textInput').value);
+                document.getElementById('textInput').value = ''
+            }
+        });
+
+        document.getElementById('redButton').addEventListener('click', () => {
+            document.getElementById('textLabel').style.color = 'red';
+        });
+
+        document.getElementById('blueButton').addEventListener('click', () => {
+            document.getElementById('textLabel').style.color = 'blue';
+        });
+
+        document.getElementById('greenButton').addEventListener('click', () => {
+            document.getElementById('textLabel').style.color = 'green';
+        });
+
+        document.getElementById('orangeButton').addEventListener('click', () => {
+            document.getElementById('textLabel').style.color = 'orange';
+        });
+
+        document.getElementById('purpleButton').addEventListener('click', () => {
+            document.getElementById('textLabel').style.color = 'purple';
+        });
+
+        async function retrieveData(number) {
+            try {
+                const response = await fetch('https://67c275541851890165ac637c.mockapi.io/users_api');
+                const data = await response.json();
+                data.forEach(user => {
+                    if (user.id == number) {
+                        let {id, first_name, user_group} = user;
+                        document.getElementById('textLabel').innerText = 
+                        `ID: ${id}, Name: ${first_name}, Group: ${user_group}`;
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching data: ', error);
+            }
+        }
+    </script>
+</html>
